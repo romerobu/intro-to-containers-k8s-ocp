@@ -105,12 +105,118 @@ Now we have our Kubernetes test-cluster, but it's the first time that we interac
 
 In the previous lab we deployed a Pacman application, let's get it deployed on Kubernetes!
 
-We have the required manifests present in these folders:
+We have the required manifests present in these folders, we will use Kubectl to load them into the cluster:
 
 - [Pacman game deployment files](./demo2-assets/pacman/)
 - [MongoDB deployment files](./demo2-assets/mongo/)
 
 1. Deploy MongoDB
 
+    1. Create the Namespace
+
+        ~~~sh
+        kubectl create -f https://github.com/mvazquezc/intro-to-containers-k8s-ocp/raw/main/demo2-assets/mongo/namespace.yaml
+        ~~~
+    2. Create the Secret with Mongo credentials
+    
+        ~~~sh
+        kubectl create -f https://github.com/mvazquezc/intro-to-containers-k8s-ocp/raw/main/demo2-assets/mongo/secret.yaml
+        ~~~
+    3. Create the Deployment
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/mongo/deployment.yaml
+        ~~~
+    4. Create the Service
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/mongo/service.yaml
+        ~~~
+    5. Check the Mongo Pod
+
+        ~~~sh
+        kubectl -n pacman-game-mongo get pods
+
+        NAME                     READY   STATUS    RESTARTS   AGE
+        mongo-545f984cb8-bfbss   1/1     Running   0          14s
+        ~~~
+
 2. Deploy Pacman
-3. Access the game
+
+    1. Create the Namespace
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/namespace.yaml
+        ~~~
+    2. Create the ClusterRole
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/cluster-role.yaml
+        ~~~
+    3. Create the ClusterRoleBinding
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/cluster-role-binding.yaml
+        ~~~
+    4. Create the Secret with Mongo credentials
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/secret.yaml
+        ~~~
+    5. Create the ServiceAccount
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/service-account.yaml
+        ~~~
+    6. Create the Deployment
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/deployment.yaml
+        ~~~
+    7. Create the Service
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/service.yaml
+        ~~~
+    8. Create the Ingress
+
+        ~~~sh
+        kubectl create -f https://raw.githubusercontent.com/mvazquezc/intro-to-containers-k8s-ocp/main/demo2-assets/pacman/ingress.yaml
+        ~~~
+    9. Check the Pacman Pod
+
+        ~~~sh
+        kubectl -n pacman-game-ui get pods
+
+        NAME                      READY   STATUS    RESTARTS   AGE
+        pacman-57859c8df7-879kt   1/1     Running   0          27s
+        ~~~
+3. Access the game in your Fedora35 node IP in port 80.
+4. If at some point we need more capacity on the frontend of our application we can scale the deployment, run the scale command and check how if you access the app the request is handled by different pods:
+
+    1. Scale the deployment so we have 5 pods 
+    
+        ~~~sh
+        kubectl -n pacman-game-ui scale deployment pacman --replicas 5
+        ~~~
+    2. Check the new pods that were created
+
+        ~~~sh
+        kubectl -n pacman-game-ui get pods
+
+        NAME                      READY   STATUS    RESTARTS   AGE
+        pacman-57859c8df7-879kt   1/1     Running   0          6m32s
+        pacman-57859c8df7-9d7lf   1/1     Running   0          12s
+        pacman-57859c8df7-g7bvn   1/1     Running   0          12s
+        pacman-57859c8df7-glf7k   1/1     Running   0          12s
+        pacman-57859c8df7-j5tfq   1/1     Running   0          12s
+        ~~~
+    3. Access the app and take a look at the `Host` text
+
+## Cleanup
+
+In order to delete the Kubernetes test cluster run below's command on the Fedora 35 system.
+
+~~~sh
+kind delete cluster --name test-cluster
+~~~
