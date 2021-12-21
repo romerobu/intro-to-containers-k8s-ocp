@@ -1,0 +1,6 @@
+apiVersion: apps.rha.lab/v1beta1
+kind: PacmanGame
+metadata:
+  name: pacmangame-sample
+spec:
+  # Add fields here

@@ -1,0 +1,270 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "apps.rha.lab/v1beta1",
+          "kind": "PacmanGame",
+          "metadata": {
+            "name": "pacmangame-sample"
+          },
+          "spec": {
+            "replicas": 1
+          }
+        }
+      ]
+    capabilities: Basic Install
+    operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
+    operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
+  name: pacman-operator.v0.0.1
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: PacmanGame is the Schema for the PacmanGames API
+      displayName: Pacman Game
+      kind: PacmanGame
+      name: pacmangames.apps.rha.lab
+      version: v1beta1
+  description: Deploys and Manages instances of Pacman Arcade Game
+  displayName: Pacman Operator
+  icon:
+  - base64data: "iVBORw0KGgoAAAANSUhEUgAAAD4AAAA+CAYAAABzwahEAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE4klEQVRogeWba4hTRxTHV0WlKoiiW1RQ9IPsBx9Fi1CrLmoeMxs/uiAKflNLfbT90kIFXyiIFqqIL1hbFaH1haiohWrpivrBZjM3cdtSC1ZxRUQaFVfdNYnHcyaaNe5NNvdmJifihcO+2NzzO/8z5849M1NTY/mC1sZ+4IgZoOTXGSWbMo78He2/jBJJ/LnjhSMBf36E39/G3yXQjqFtwv9ZANHwCNv+Gb0gERkCKrwMYc5nHPGU4PwafsbfGJjvoUV+zM1V8IJYw3R09PhrJU0bBQHi8gtwggO5WfUFMRnE9Gy2AesaAEfcx6Gwhi0AoCKjEPhgpYC7B0DeAUcuBqjpVUFouRxTr50LOn8IiLOofq1d4GhgMFVeblgX+LsQCwfsQDvBsTi+rnNDFk59kaaniWHoyAQaU9xwpakv15uDVvJ/ow4qAanLMyHVPB0yfwRtpP6G8qCpcjvilkmn0lfq4cmhUfC4aWjW9g2DjnOTjcODEl/5g26tH4Tp3WpUiWgA2g982AX9hnX+OsW06hkc8xHP4Ai937QKHWcnuUKTUUAspHwSWhrGlK62EotMO0H27MT4guBkmRYL490RlwDW9i4hxUNDaVpoA7zzzITCiv9Yq4uejfviDO+zUlJ8j42b6+hfnQPtPwx3BadhYO2+lPLFZneQEJOoKNhygCzV/AmO59p86JN11tTugpe7Cqut5E82b55zIhqE5xemYSWfio+3Wdbv9wq8A1oCI13UjozDNE9VwgkuQ74tLmqL77gdswcs0qj4KYiLuflqY7nHP7ZxO2gB+AECb6cXLPeipkSI20nDwJdoLgLXRf+CBU2nuSN2cDtbNqySz6gjBKrho6Kw+eBm5+SVBRb/oLrf0MSrZGCd5vhgx2i94AbwBOvI5+jzUVR3tu+eG3VJuUE8qHsXoTdDdN5oX7D5iouV3EA9K6yLVSNEp/YtG/j1Va2FDZV9qB9FiVCdMdi3wA9zQ76l7l96xaS1fpAV4By4EufYYZXoRIWPWGsRu4I74jIfsLyhH0UxMbxiwDlwJS8ypnUb3n8dF/gv72eqV9mSEGaBAiWXWF8NRfBt3LDuAZCP0PbSgoYVcIzuCm7IEoZCVC8Jm5zAgBMOc4N5GAZtaUesdW0heQandrLlBqOFAKTR59NUDMvaGIAfco0bxncQ/L6WavAqna97C4B8rIthLDS5ZHBqwnE7bjgLopgFS+FK4wfFwanZqORtboeNB6CnZqNOdyW3cjtqMQDu7WWtut7j8h4uKGSLnDzE7Zw16EJLSFnVab/Lu/VM96D2zqKFDsF3cztpXm2R7PHVl3YfY1rc43bWpCH050Whc/AxuZDbWYNqN8ORxj4lgWdTXjZxO20AOum5B0+zHjo1wO28b+jsFk/v2700fHaD301uCD9GCyW+oHPwiVCdrV1Q9tSWG8uCzsHH5cR3ZeMAvpysNgKdg8cigZH8kxusiMopeiMzCt0FHxhMbWBuyO7Qog3i4ZlWoPMCoOSSKjqacbqiCxLVchinYsDdA9Awm04QVk5heQ+L7bdVdP6MDtzREUlLB+6wsIITXoVFdgA3q+uVPWIpltLyczl1gPblECx1hjztZKqGi1Y+sBB+ioH4knZFY/X9Db/+S+mqt2fpTTwiScc/qEGI9jNNPiAu5ts8S/YSrYTB104xiuoAAAAASUVORK5CYII="
+    mediatype: "image/png"
+  install:
+    spec:
+      clusterPermissions:
+      - rules:
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - apps.rha.lab
+          resources:
+          - pacmangames
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - apps.rha.lab
+          resources:
+          - pacmangames/status
+          verbs:
+          - get
+          - patch
+          - update
+        - apiGroups:
+          - apps.rha.lab
+          resources:
+          - pacmangames/finalizers
+          verbs:
+          - get
+          - patch
+          - update
+        - apiGroups:
+          - "rbac.authorization.k8s.io"
+          resources:
+          - clusterroles
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - "rbac.authorization.k8s.io"
+          resources:
+          - clusterrolebindings
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          verbs:
+          - get
+          - list
+          - watch
+        - apiGroups:
+          - ""
+          resources:
+          - serviceaccounts
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - ""
+          resources:
+          - services
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - authentication.k8s.io
+          resources:
+          - tokenreviews
+          verbs:
+          - create
+        - apiGroups:
+          - authorization.k8s.io
+          resources:
+          - subjectaccessreviews
+          verbs:
+          - create
+        serviceAccountName: pacman-operator-controller-manager
+      deployments:
+      - name: pacman-operator-controller-manager
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              control-plane: controller-manager
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                control-plane: controller-manager
+            spec:
+              containers:
+              - args:
+                - --secure-listen-address=0.0.0.0:8443
+                - --upstream=http://127.0.0.1:8080/
+                - --logtostderr=true
+                - --v=10
+                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+                name: kube-rbac-proxy
+                ports:
+                - containerPort: 8443
+                  name: https
+                  protocol: TCP
+                resources: {}
+              - args:
+                - --health-probe-bind-address=:8081
+                - --metrics-bind-address=127.0.0.1:8080
+                - --leader-elect
+                command:
+                - /manager
+                image: quay.io/mavazque/pacman-operator:v0.0.1
+                env:
+                - name: WATCH_NAMESPACE
+                  value: ""
+#                  valueFrom:
+#                    fieldRef:
+#                      fieldPath: metadata.annotations['olm.targetNamespaces'] 
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+                name: manager
+                readinessProbe:
+                  httpGet:
+                    path: /readyz
+                    port: 8081
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                resources:
+                  limits:
+                    cpu: 200m
+                    memory: 100Mi
+                  requests:
+                    cpu: 100m
+                    memory: 20Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+              securityContext:
+                runAsNonRoot: true
+              serviceAccountName: pacman-operator-controller-manager
+              terminationGracePeriodSeconds: 10
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - coordination.k8s.io
+          resources:
+          - leases
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+          - patch
+        serviceAccountName: pacman-operator-controller-manager
+    strategy: deployment
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - pacman
+  - arcade
+  - games
+  links:
+  - name: Pacman Operator
+    url: https://pacman-operator.domain
+  maturity: alpha
+  provider:
+    name: RHA
+    url: linuxera.org
+  version: 0.0.1
