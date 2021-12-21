@@ -1,6 +1,6 @@
 # Introduction to Kubernetes
 
-In this demo we are going to see how to deploy a Kubernetes test cluster using [Kind](https://github.com/kubernetes-sigs/kind). We will deploy an application and expose it so we can access it from our browser.
+In this lab we are going to see how to deploy a Kubernetes test cluster using [Kind](https://github.com/kubernetes-sigs/kind). We will deploy an application and expose it so we can access it from our browser.
 
 ## Running a test cluster with Kind
 
@@ -218,5 +218,5 @@ We have the required manifests present in these folders, we will use Kubectl to 
 In order to delete the Kubernetes test cluster run below's command on the Fedora 35 system.
 
 ~~~sh
-kind delete cluster --name test-cluster
+sudo kind delete cluster --name test-cluster
 ~~~
