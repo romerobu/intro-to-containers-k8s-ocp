@@ -12,6 +12,8 @@ Go to section 6.10 and follow the instructions to create your first app with the
 
 ## Create application using Templates
 
+Go to section 7.5 to implement an app using Templates.
+
 ## Admin Console
 
 The instructor will show:
