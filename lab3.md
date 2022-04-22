@@ -19,9 +19,13 @@ oc whoami --show-server # To retrieve OCP API
 oc whaomi # To retrieve user logged
 ```
 
+* Once you log in to the Openshift console for the first time is highly recommended to get started with the tour.
+
+* On Developer Catalog, select PHP (Builder Images). We will use Templates on the next exercise.
+
 ## Create application using Templates
 
-Go to section 7.5 to implement an app using Templates.
+Go to section 7.6 to implement an app using Templates.
 
 ## Admin Console
 
